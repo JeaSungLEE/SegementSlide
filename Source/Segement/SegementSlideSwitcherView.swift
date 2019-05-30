@@ -18,6 +18,11 @@ public enum UnderlineType {
     case corner
 }
 
+public enum SeperatelineType {
+    case none
+    case full
+}
+
 public protocol SegementSlideSwitcherViewDelegate: class {
     var titlesInSegementSlideSwitcherView: [String] { get }
     
@@ -29,6 +34,7 @@ public class SegementSlideSwitcherView: UIView {
     
     private let scrollView = UIScrollView()
     private let indicatorView = UIView()
+    private let seperateLineView = UIView()
     private var titleButtons: [UIButton] = []
     private var initSelectedIndex: Int?
     private var innerConfig: SegementSlideSwitcherConfig = SegementSlideSwitcherConfig.shared
@@ -88,6 +94,7 @@ public class SegementSlideSwitcherView: UIView {
         }
         titleButtons.removeAll()
         indicatorView.removeFromSuperview()
+        seperateLineView.removeFromSuperview()
         indicatorView.frame = .zero
         scrollView.isScrollEnabled = innerConfig.type == .segement
         innerConfig = config
@@ -106,6 +113,14 @@ public class SegementSlideSwitcherView: UIView {
             titleButtons.append(button)
         }
         guard !titleButtons.isEmpty else { return }
+        
+        if innerConfig.seperatelineType == .full {
+            scrollView.addSubview(seperateLineView)
+            seperateLineView.frame = CGRect(x: 0, y: self.frame.size.height - 1, width: self.frame.size.width, height: 1)
+            seperateLineView.backgroundColor = .black
+            seperateLineView.alpha = 0.06
+        }
+        
         scrollView.addSubview(indicatorView)
         
         if innerConfig.underlineType == .corner {
