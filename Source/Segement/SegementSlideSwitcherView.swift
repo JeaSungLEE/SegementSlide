@@ -116,7 +116,6 @@ public class SegementSlideSwitcherView: UIView {
         
         if innerConfig.seperatelineType == .full {
             scrollView.addSubview(seperateLineView)
-            seperateLineView.frame = CGRect(x: 0, y: self.frame.size.height - 1, width: self.frame.size.width, height: 1)
             seperateLineView.backgroundColor = .black
             seperateLineView.alpha = 0.06
         }
@@ -219,6 +218,7 @@ extension SegementSlideSwitcherView {
         switch innerConfig.type {
         case .tab:
             scrollView.contentSize = CGSize(width: bounds.width, height: bounds.height)
+            seperateLineView.frame = CGRect(x: 0, y: bounds.height - 1, width: bounds.width, height: 1)
         case .segement:
             scrollView.contentSize = CGSize(width: offsetX-innerConfig.horizontalSpace+innerConfig.horizontalMargin, height: bounds.height)
         }
