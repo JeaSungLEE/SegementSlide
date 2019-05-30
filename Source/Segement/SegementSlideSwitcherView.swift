@@ -13,6 +13,11 @@ public enum SwitcherType {
     case segement
 }
 
+public enum UnderlineType {
+    case normal
+    case corner
+}
+
 public protocol SegementSlideSwitcherViewDelegate: class {
     var titlesInSegementSlideSwitcherView: [String] { get }
     
@@ -102,8 +107,12 @@ public class SegementSlideSwitcherView: UIView {
         }
         guard !titleButtons.isEmpty else { return }
         scrollView.addSubview(indicatorView)
-        indicatorView.layer.masksToBounds = true
-        indicatorView.layer.cornerRadius = innerConfig.indicatorHeight/2
+        
+        if innerConfig.underlineType == .corner {
+            indicatorView.layer.masksToBounds = true
+            indicatorView.layer.cornerRadius = innerConfig.indicatorHeight/2
+        }
+        
         indicatorView.backgroundColor = innerConfig.indicatorColor
         layoutTitleButtons()
         reloadBadges()

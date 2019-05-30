@@ -13,6 +13,7 @@ public struct SegementSlideSwitcherConfig {
     public static let shared = SegementSlideSwitcherConfig()
     
     public var type: SwitcherType
+    public var underlineType: UnderlineType
     public var horizontalMargin: CGFloat
     public var horizontalSpace: CGFloat
     public var normalTitleFont: UIFont
@@ -28,6 +29,7 @@ public struct SegementSlideSwitcherConfig {
     public var badgeFontForCountType: UIFont
     
     public init(type: SwitcherType = .segement,
+                underlineType: UnderlineType = .corner,
                 horizontalMargin: CGFloat = 16,
                 horizontalSpace: CGFloat = 32,
                 normalTitleFont: UIFont = UIFont.systemFont(ofSize: 15),
@@ -42,6 +44,7 @@ public struct SegementSlideSwitcherConfig {
                 badgeHeightForCustomType: CGFloat = 14,
                 badgeFontForCountType: UIFont = UIFont.systemFont(ofSize: 10, weight: .regular)) {
         self.type = type
+        self.underlineType = underlineType
         self.horizontalMargin = horizontalMargin
         self.horizontalSpace = horizontalSpace
         self.normalTitleFont = normalTitleFont
