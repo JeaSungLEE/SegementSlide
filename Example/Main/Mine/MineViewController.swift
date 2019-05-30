@@ -5,7 +5,7 @@
 //  Created by Jiar on 2018/12/12.
 //  Copyright © 2018 Jiar. All rights reserved.
 //
-//  test
+
 import UIKit
 import SegementSlide
 
