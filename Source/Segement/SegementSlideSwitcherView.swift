@@ -137,10 +137,10 @@ public class SegementSlideSwitcherView: UIView {
     public func reloadBadges() {
         for (index, titleButton) in titleButtons.enumerated() {
             guard let type = delegate?.segementSwitcherView(self, showBadgeAtIndex: index) else {
-                titleButton.badge.type = .none
+                titleButton.insideBadge.type = .none
                 continue
             }
-            titleButton.badge.type = type
+            titleButton.insideBadge.type = type
             if case .none = type {
                 continue
             }
@@ -156,15 +156,15 @@ public class SegementSlideSwitcherView: UIView {
             case .none:
                 break
             case .point:
-                titleButton.badge.height = innerConfig.badgeHeightForPointType
-                titleButton.badge.offset = CGPoint(x: width/2+titleButton.badge.height/2, y: -height/2)
+                titleButton.insideBadge.height = innerConfig.badgeHeightForPointType
+                titleButton.insideBadge.offset = CGPoint(x: width/2+titleButton.insideBadge.height/2, y: -height/2)
             case .count:
-                titleButton.badge.font = innerConfig.badgeFontForCountType
-                titleButton.badge.height = innerConfig.badgeHeightForCountType
-                titleButton.badge.offset = CGPoint(x: width/2+titleButton.badge.height/2, y: -height/2)
+                titleButton.insideBadge.font = innerConfig.badgeFontForCountType
+                titleButton.insideBadge.height = innerConfig.badgeHeightForCountType
+                titleButton.insideBadge.offset = CGPoint(x: width/2+titleButton.insideBadge.height/2, y: -height/2)
             case .custom:
-                titleButton.badge.height = innerConfig.badgeHeightForCustomType
-                titleButton.badge.offset = CGPoint(x: width/2+titleButton.badge.height/2, y: -height/2)
+                titleButton.insideBadge.height = innerConfig.badgeHeightForCustomType
+                titleButton.insideBadge.offset = CGPoint(x: width/2+titleButton.insideBadge.height/2, y: -height/2)
             }
         }
     }

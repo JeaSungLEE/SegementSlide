@@ -38,16 +38,16 @@ private var badgeKey: Void?
 
 public extension UIView {
     
-    var badge: Badge {
+    var insideBadge: Badge {
         get {
-            let badge: Badge
+            let insideBadge: Badge
             if let value = objc_getAssociatedObject(self, &badgeKey) as? Badge {
-                badge = value
+                insideBadge = value
             } else {
-                badge = Badge(self)
-                objc_setAssociatedObject(self, &badgeKey, badge, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                insideBadge = Badge(self)
+                objc_setAssociatedObject(self, &badgeKey, insideBadge, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             }
-            return badge
+            return insideBadge
         }
     }
     
