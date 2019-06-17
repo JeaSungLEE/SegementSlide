@@ -118,7 +118,7 @@ open class SegementSlideViewController: UIViewController {
         
     }
     
-    open func didSelectContentViewController(at index: Int) {
+    open func didSelectContentViewController(at index: Int, viewController: SegementSlideContentScrollViewDelegate?) {
         
     }
     
