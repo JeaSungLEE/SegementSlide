@@ -240,7 +240,7 @@ extension SegementSlideSwitcherView {
         titleButton.setTitleColor(innerConfig.selectedTitleColor, for: .normal)
         titleButton.titleLabel?.font = innerConfig.selectedTitleFont
         if animated, indicatorView.frame != .zero {
-            UIView.animate(withDuration: 0.25) {
+            UIView.animate(withDuration: 0.1) {
                 self.indicatorView.frame = CGRect(x: titleButton.frame.origin.x+(titleButton.bounds.width-self.innerConfig.indicatorWidth)/2, y: self.frame.height-self.innerConfig.indicatorHeight, width: self.innerConfig.indicatorWidth, height: self.innerConfig.indicatorHeight)
             }
         } else {
