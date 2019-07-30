@@ -13,6 +13,16 @@ public enum SwitcherType {
     case segement
 }
 
+public enum UnderlineType {
+    case normal
+    case corner
+}
+
+public enum SeperatelineType {
+    case none
+    case full
+}
+
 public protocol SegementSlideSwitcherViewDelegate: class {
     var titlesInSegementSlideSwitcherView: [String] { get }
     
@@ -24,6 +34,7 @@ public class SegementSlideSwitcherView: UIView {
     
     private let scrollView = UIScrollView()
     private let indicatorView = UIView()
+    private let seperateLineView = UIView()
     private var titleButtons: [UIButton] = []
     private var initSelectedIndex: Int?
     private var innerConfig: SegementSlideSwitcherConfig = SegementSlideSwitcherConfig.shared
@@ -83,6 +94,7 @@ public class SegementSlideSwitcherView: UIView {
         }
         titleButtons.removeAll()
         indicatorView.removeFromSuperview()
+        seperateLineView.removeFromSuperview()
         indicatorView.frame = .zero
         scrollView.isScrollEnabled = innerConfig.type == .segement
         innerConfig = config
@@ -101,9 +113,20 @@ public class SegementSlideSwitcherView: UIView {
             titleButtons.append(button)
         }
         guard !titleButtons.isEmpty else { return }
+        
+        if innerConfig.seperatelineType == .full {
+            scrollView.addSubview(seperateLineView)
+            seperateLineView.backgroundColor = .black
+            seperateLineView.alpha = 0.06
+        }
+        
         scrollView.addSubview(indicatorView)
-        indicatorView.layer.masksToBounds = true
-        indicatorView.layer.cornerRadius = innerConfig.indicatorHeight/2
+        
+        if innerConfig.underlineType == .corner {
+            indicatorView.layer.masksToBounds = true
+            indicatorView.layer.cornerRadius = innerConfig.indicatorHeight/2
+        }
+        
         indicatorView.backgroundColor = innerConfig.indicatorColor
         layoutTitleButtons()
         reloadBadges()
@@ -114,10 +137,10 @@ public class SegementSlideSwitcherView: UIView {
     public func reloadBadges() {
         for (index, titleButton) in titleButtons.enumerated() {
             guard let type = delegate?.segementSwitcherView(self, showBadgeAtIndex: index) else {
-                titleButton.badge.type = .none
+                titleButton.insideBadge.type = .none
                 continue
             }
-            titleButton.badge.type = type
+            titleButton.insideBadge.type = type
             if case .none = type {
                 continue
             }
@@ -133,15 +156,15 @@ public class SegementSlideSwitcherView: UIView {
             case .none:
                 break
             case .point:
-                titleButton.badge.height = innerConfig.badgeHeightForPointType
-                titleButton.badge.offset = CGPoint(x: width/2+titleButton.badge.height/2, y: -height/2)
+                titleButton.insideBadge.height = innerConfig.badgeHeightForPointType
+                titleButton.insideBadge.offset = CGPoint(x: width/2+titleButton.insideBadge.height/2, y: -height/2)
             case .count:
-                titleButton.badge.font = innerConfig.badgeFontForCountType
-                titleButton.badge.height = innerConfig.badgeHeightForCountType
-                titleButton.badge.offset = CGPoint(x: width/2+titleButton.badge.height/2, y: -height/2)
+                titleButton.insideBadge.font = innerConfig.badgeFontForCountType
+                titleButton.insideBadge.height = innerConfig.badgeHeightForCountType
+                titleButton.insideBadge.offset = CGPoint(x: width/2+titleButton.insideBadge.height/2, y: -height/2)
             case .custom:
-                titleButton.badge.height = innerConfig.badgeHeightForCustomType
-                titleButton.badge.offset = CGPoint(x: width/2+titleButton.badge.height/2, y: -height/2)
+                titleButton.insideBadge.height = innerConfig.badgeHeightForCustomType
+                titleButton.insideBadge.offset = CGPoint(x: width/2+titleButton.insideBadge.height/2, y: -height/2)
             }
         }
     }
@@ -195,6 +218,7 @@ extension SegementSlideSwitcherView {
         switch innerConfig.type {
         case .tab:
             scrollView.contentSize = CGSize(width: bounds.width, height: bounds.height)
+            seperateLineView.frame = CGRect(x: 0, y: bounds.height - 1, width: bounds.width, height: 1)
         case .segement:
             scrollView.contentSize = CGSize(width: offsetX-innerConfig.horizontalSpace+innerConfig.horizontalMargin, height: bounds.height)
         }
@@ -216,7 +240,7 @@ extension SegementSlideSwitcherView {
         titleButton.setTitleColor(innerConfig.selectedTitleColor, for: .normal)
         titleButton.titleLabel?.font = innerConfig.selectedTitleFont
         if animated, indicatorView.frame != .zero {
-            UIView.animate(withDuration: 0.25) {
+            UIView.animate(withDuration: 0.1) {
                 self.indicatorView.frame = CGRect(x: titleButton.frame.origin.x+(titleButton.bounds.width-self.innerConfig.indicatorWidth)/2, y: self.frame.height-self.innerConfig.indicatorHeight, width: self.innerConfig.indicatorWidth, height: self.innerConfig.indicatorHeight)
             }
         } else {

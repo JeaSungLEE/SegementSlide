@@ -59,7 +59,7 @@ extension SegementSlideViewController: SegementSlideContentDelegate {
         childKeyValueObservation?.invalidate()
         guard let childViewController = segementSlideContentView.dequeueReusableViewController(at: index) else { return }
         defer {
-            didSelectContentViewController(at: index)
+            didSelectContentViewController(at: index, viewController: childViewController)
         }
         guard let scrollView = childViewController.scrollView else { return }
         let keyValueObservation = scrollView.observe(\.contentOffset, options: [.new, .old], changeHandler: { [weak self] (scrollView, change) in
