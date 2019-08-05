@@ -29,6 +29,7 @@ public class SegementSlideContentView: UIView {
     private var initSelectedIndex: Int?
     
     public private(set) var selectedIndex: Int?
+    public var isVerticalScrollable: Bool = true
     public weak var delegate: SegementSlideContentDelegate?
     public weak var viewController: UIViewController?
     
@@ -93,6 +94,11 @@ public class SegementSlideContentView: UIView {
 }
 
 extension SegementSlideContentView: UIScrollViewDelegate {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard !isVerticalScrollable, let index = selectedIndex else { return }
+        let xPosition = CGFloat(index) * scrollView.bounds.width
+        scrollView.contentOffset = CGPoint(x: xPosition, y: scrollView.contentOffset.y)
+    }
 
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if decelerate { return }
