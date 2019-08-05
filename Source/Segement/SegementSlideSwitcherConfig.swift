@@ -28,6 +28,7 @@ public struct SegementSlideSwitcherConfig {
     public var badgeHeightForCountType: CGFloat
     public var badgeHeightForCustomType: CGFloat
     public var badgeFontForCountType: UIFont
+    public var isVerticalScrollable: Bool
     
     public init(type: SwitcherType = .segement,
                 underlineType: UnderlineType = .corner,
@@ -44,7 +45,8 @@ public struct SegementSlideSwitcherConfig {
                 badgeHeightForPointType: CGFloat = 9,
                 badgeHeightForCountType: CGFloat = 15,
                 badgeHeightForCustomType: CGFloat = 14,
-                badgeFontForCountType: UIFont = UIFont.systemFont(ofSize: 10, weight: .regular)) {
+                badgeFontForCountType: UIFont = UIFont.systemFont(ofSize: 10, weight: .regular),
+                isVerticalScrollable: Bool = false) {
         self.type = type
         self.underlineType = underlineType
         self.seperatelineType = seperatelineType
@@ -61,6 +63,7 @@ public struct SegementSlideSwitcherConfig {
         self.badgeHeightForCountType = badgeHeightForCountType
         self.badgeHeightForCustomType = badgeHeightForCustomType
         self.badgeFontForCountType = badgeFontForCountType
+        self.isVerticalScrollable = isVerticalScrollable
     }
     
 }

@@ -37,6 +37,7 @@ extension SegementSlideViewController {
     private func setupSegementSlideContentView() {
         segementSlideContentView.delegate = self
         segementSlideContentView.viewController = self
+        segementSlideContentView.isVerticalScrollable = SegementSlideSwitcherConfig.shared.isVerticalScrollable
         segementSlideScrollView.addSubview(segementSlideContentView)
     }
     
