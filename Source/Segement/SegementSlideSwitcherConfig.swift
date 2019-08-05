@@ -46,7 +46,7 @@ public struct SegementSlideSwitcherConfig {
                 badgeHeightForCountType: CGFloat = 15,
                 badgeHeightForCustomType: CGFloat = 14,
                 badgeFontForCountType: UIFont = UIFont.systemFont(ofSize: 10, weight: .regular),
-                isVerticalScrollable: Bool = false) {
+                isVerticalScrollable: Bool = true) {
         self.type = type
         self.underlineType = underlineType
         self.seperatelineType = seperatelineType
