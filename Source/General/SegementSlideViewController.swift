@@ -40,16 +40,6 @@ open class SegementSlideViewController: UIViewController {
     public var slideContentView: UIView {
         return segementSlideContentView
     }
-    public var headerStickyHeight: CGFloat {
-        guard let innerHeaderHeight = innerHeaderHeight else {
-            return 0
-        }
-        if edgesForExtendedLayout.contains(.top) {
-            return innerHeaderHeight-topLayoutLength
-        } else {
-            return innerHeaderHeight
-        }
-    }
     public var contentViewHeight: CGFloat {
         return view.bounds.height-topLayoutLength-switcherHeight
     }
@@ -60,7 +50,16 @@ open class SegementSlideViewController: UIViewController {
         guard let currentIndex = currentIndex else { return nil }
         return segementSlideContentView.dequeueReusableViewController(at: currentIndex)
     }
-    
+    open var headerStickyHeight: CGFloat {
+        guard let innerHeaderHeight = innerHeaderHeight else {
+            return 0
+        }
+        if edgesForExtendedLayout.contains(.top) {
+            return innerHeaderHeight-topLayoutLength
+        } else {
+            return innerHeaderHeight
+        }
+    }
     open var bouncesType: BouncesType {
         return .parent
     }
