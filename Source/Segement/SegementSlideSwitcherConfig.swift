@@ -9,9 +9,9 @@
 import UIKit
 
 public struct SegementSlideSwitcherConfig {
-    
+
     public static let shared = SegementSlideSwitcherConfig()
-    
+
     public var type: SwitcherType
     public var underlineType: UnderlineType
     public var seperatelineType: SeperatelineType
@@ -21,7 +21,7 @@ public struct SegementSlideSwitcherConfig {
     public var selectedTitleFont: UIFont
     public var normalTitleColor: UIColor
     public var selectedTitleColor: UIColor
-    public var indicatorWidth: CGFloat
+    public var indicatorWidth: CGFloat?
     public var indicatorHeight: CGFloat
     public var indicatorColor: UIColor
     public var badgeHeightForPointType: CGFloat
@@ -29,7 +29,7 @@ public struct SegementSlideSwitcherConfig {
     public var badgeHeightForCustomType: CGFloat
     public var badgeFontForCountType: UIFont
     public var isVerticalScrollable: Bool
-    
+
     public init(type: SwitcherType = .segement,
                 underlineType: UnderlineType = .corner,
                 seperatelineType: SeperatelineType = .none,
@@ -39,7 +39,7 @@ public struct SegementSlideSwitcherConfig {
                 selectedTitleFont: UIFont = UIFont.systemFont(ofSize: 15, weight: .medium),
                 normalTitleColor: UIColor = UIColor.gray,
                 selectedTitleColor: UIColor = UIColor.darkGray,
-                indicatorWidth: CGFloat = 30,
+                indicatorWidth: CGFloat? = nil,
                 indicatorHeight: CGFloat = 2,
                 indicatorColor: UIColor = UIColor.darkGray,
                 badgeHeightForPointType: CGFloat = 9,
@@ -65,5 +65,5 @@ public struct SegementSlideSwitcherConfig {
         self.badgeFontForCountType = badgeFontForCountType
         self.isVerticalScrollable = isVerticalScrollable
     }
-    
+
 }
