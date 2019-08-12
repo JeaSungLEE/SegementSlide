@@ -21,9 +21,7 @@ struct SegementSlideViewControllerAssociatedKeys {
     static var waitTobeResetContentOffsetY: Set<Int> = Set()
 }
 
-protocol SegementSlideViewController {
-    var view: UIView! { get set }
-    var edgesForExtendedLayout: UIRectEdge { get set }
+protocol SegementSlideViewController: UIViewController {
 
     var segementSlideScrollView: SegementSlideScrollView! { get set }
     var segementSlideHeaderView: SegementSlideHeaderView! { get set }
@@ -55,16 +53,76 @@ protocol SegementSlideViewController {
     func segementSlideContentViewController(at index: Int) -> SegementSlideContentScrollViewDelegate?
     func scrollViewDidScroll(_ scrollView: UIScrollView, isParent: Bool)
     func didSelectContentViewController(at index: Int, viewController: SegementSlideContentScrollViewDelegate?)
-    mutating func reloadData()
+    func reloadData()
     func reloadHeader()
     func reloadSwitcher()
     func reloadBadgeInSwitcher()
-    mutating func reloadContent()
+    func reloadContent()
     func scrollToSlide(at index: Int, animated: Bool)
     func dequeueReusableViewController(at index: Int) -> SegementSlideContentScrollViewDelegate?
 }
 
 extension SegementSlideViewController {
+    var innerBouncesType: BouncesType {
+        get {
+            guard let value = objc_getAssociatedObject(self, &SegementSlideViewControllerAssociatedKeys.innerBouncesType) as? BouncesType else {
+                return .parent
+            }
+            return value
+        }
+        set(newValue) {
+            objc_setAssociatedObject(self, &SegementSlideViewControllerAssociatedKeys.innerBouncesType, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+
+    var canParentViewScroll: Bool {
+        get {
+            guard let value = objc_getAssociatedObject(self, &SegementSlideViewControllerAssociatedKeys.canParentViewScroll) as? Bool else {
+                return true
+            }
+            return value
+        }
+        set(newValue) {
+            objc_setAssociatedObject(self, &SegementSlideViewControllerAssociatedKeys.canParentViewScroll, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+
+    var canChildViewScroll: Bool {
+        get {
+            guard let value = objc_getAssociatedObject(self, &SegementSlideViewControllerAssociatedKeys.canChildViewScroll) as? Bool else {
+                return false
+            }
+            return value
+        }
+        set(newValue) {
+            objc_setAssociatedObject(self, &SegementSlideViewControllerAssociatedKeys.canChildViewScroll, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+
+    var lastChildBouncesTranslationY: CGFloat {
+        get {
+            guard let value = objc_getAssociatedObject(self, &SegementSlideViewControllerAssociatedKeys.lastChildBouncesTranslationY) as? CGFloat else {
+                return 0
+            }
+            return value
+        }
+        set(newValue) {
+            objc_setAssociatedObject(self, &SegementSlideViewControllerAssociatedKeys.lastChildBouncesTranslationY, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+
+    var waitTobeResetContentOffsetY: Set<Int> {
+        get {
+            guard let value = objc_getAssociatedObject(self, &SegementSlideViewControllerAssociatedKeys.waitTobeResetContentOffsetY) as? Set<Int> else {
+                return Set()
+            }
+            return value
+        }
+        set(newValue) {
+            objc_setAssociatedObject(self, &SegementSlideViewControllerAssociatedKeys.waitTobeResetContentOffsetY, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+
     var slideScrollView: UIScrollView {
         return segementSlideScrollView
     }
@@ -74,9 +132,6 @@ extension SegementSlideViewController {
     var slideContentView: UIView {
         return segementSlideContentView
     }
-    var contentViewHeight: CGFloat {
-        return view.bounds.height-topLayoutLength-switcherHeight
-    }
     var currentIndex: Int? {
         return segementSlideSwitcherView.selectedIndex
     }
@@ -84,43 +139,9 @@ extension SegementSlideViewController {
         guard let currentIndex = currentIndex else { return nil }
         return segementSlideContentView.dequeueReusableViewController(at: currentIndex)
     }
-    var headerStickyHeight: CGFloat {
-        guard let innerHeaderHeight = innerHeaderHeight else {
-            return 0
-        }
-        if edgesForExtendedLayout.contains(.top) {
-            return innerHeaderHeight-topLayoutLength
-        } else {
-            return innerHeaderHeight
-        }
-    }
     var bouncesType: BouncesType {
         return .parent
     }
-
-    /// the value should contains topLayoutGuide's length(safeAreaInsets.top in iOS 11), if the edgesForExtendedLayout in viewController contains `.top`
-    var headerHeight: CGFloat? {
-        if edgesForExtendedLayout.contains(.top) {
-            #if DEBUG
-            assert(false, "must override this variable")
-            #endif
-            return nil
-        } else {
-            return nil
-        }
-    }
-
-    var headerView: UIView? {
-        if edgesForExtendedLayout.contains(.top) {
-            #if DEBUG
-            assert(false, "must override this variable")
-            #endif
-            return nil
-        } else {
-            return nil
-        }
-    }
-
     var switcherHeight: CGFloat {
         return 44
     }
@@ -160,7 +181,7 @@ extension SegementSlideViewController {
     /// you should call `scrollToSlide(at index: Int, animated: Bool)` after call the method.
     /// otherwise, none of them will be selected.
     /// However, if an item was previously selected, it will be reSelected.
-    mutating func reloadData() {
+    func reloadData() {
         setupBounces()
         setupHeader()
         setupSwitcher()
@@ -189,7 +210,7 @@ extension SegementSlideViewController {
     }
 
     /// reload ContentView
-    mutating func reloadContent() {
+    func reloadContent() {
         waitTobeResetContentOffsetY.removeAll()
         segementSlideContentView.reloadData()
     }

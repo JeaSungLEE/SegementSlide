@@ -10,7 +10,7 @@ import UIKit
 
 extension SegementSlideViewController {
     
-    internal func setup() {
+    mutating func setup() {
         view.backgroundColor = .white
         extendedLayoutIncludesOpaqueBars = true
         edgesForExtendedLayout = []
@@ -23,7 +23,7 @@ extension SegementSlideViewController {
         observeWillClearAllReusableViewControllersNotification()
     }
     
-    private func setupSegementSlideViews() {
+    private mutating func setupSegementSlideViews() {
         segementSlideHeaderView = SegementSlideHeaderView()
         segementSlideSwitcherView = SegementSlideSwitcherView()
         segementSlideContentView = SegementSlideContentView()
@@ -73,12 +73,12 @@ extension SegementSlideViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(willClearAllReusableViewControllers), name: SegementSlideContentView.willClearAllReusableViewControllersNotification, object: nil)
     }
     
-    @objc private func willClearAllReusableViewControllers() {
+    @objc private mutating func willClearAllReusableViewControllers() {
         childKeyValueObservation?.invalidate()
         childKeyValueObservation = nil
     }
     
-    internal func setupBounces() {
+    mutating func setupBounces() {
         innerBouncesType = bouncesType
         switch innerBouncesType {
         case .parent:
@@ -90,17 +90,17 @@ extension SegementSlideViewController {
         }
     }
     
-    internal func setupHeader() {
+    mutating func setupHeader() {
         innerHeaderHeight = headerHeight?.rounded(.up)
         innerHeaderView = headerView
     }
     
-    internal func setupSwitcher() {
+    func setupSwitcher() {
         segementSlideContentView.isVerticalScrollable = switcherConfig.isVerticalScrollable
         segementSlideSwitcherView.config = switcherConfig
     }
     
-    internal func layoutSegementSlideScrollView() {
+    func layoutSegementSlideScrollView() {
         let innerHeaderHeight: CGFloat
         if let _ = innerHeaderView, let height = self.innerHeaderHeight {
             innerHeaderHeight = height
@@ -194,7 +194,7 @@ extension SegementSlideViewController {
         }
     }
     
-    internal func resetChildViewControllerContentOffsetY() {
+    mutating func resetChildViewControllerContentOffsetY() {
         guard segementSlideScrollView.contentOffset.y < headerStickyHeight else {
             return
         }
