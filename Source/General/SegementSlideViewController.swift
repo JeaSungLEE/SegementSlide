@@ -19,7 +19,7 @@ open class SegementSlideViewController: UIViewController {
     internal var segementSlideHeaderView: SegementSlideHeaderView!
     internal var segementSlideContentView: SegementSlideContentView!
     internal var segementSlideSwitcherView: SegementSlideSwitcherView!
-    public var segementSlideSwitcherRightView: UIView = {
+    open var segementSlideSwitcherRightView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.widthAnchor.constraint(equalToConstant: 0).isActive = true
