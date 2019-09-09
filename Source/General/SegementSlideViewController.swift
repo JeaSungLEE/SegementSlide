@@ -19,12 +19,6 @@ open class SegementSlideViewController: UIViewController {
     internal var segementSlideHeaderView: SegementSlideHeaderView!
     internal var segementSlideContentView: SegementSlideContentView!
     internal var segementSlideSwitcherView: SegementSlideSwitcherView!
-    internal var segementSlideSwitcherRightView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.widthAnchor.constraint(equalToConstant: 0).isActive = true
-        return view
-    }()
     internal var innerHeaderHeight: CGFloat?
     internal var innerHeaderView: UIView?
     
@@ -37,9 +31,6 @@ open class SegementSlideViewController: UIViewController {
     internal var lastChildBouncesTranslationY: CGFloat = 0
     internal var waitTobeResetContentOffsetY: Set<Int> = Set()
 
-    open var slideSwitcherRightView: UIView {
-        return segementSlideSwitcherRightView
-    }
     public var slideScrollView: UIScrollView {
         return segementSlideScrollView
     }

@@ -43,7 +43,6 @@ extension SegementSlideViewController {
     private func setupSegementSlideSwitcherView() {
         segementSlideSwitcherView.delegate = self
         segementSlideScrollView.addSubview(segementSlideSwitcherView)
-        segementSlideScrollView.addSubview(segementSlideSwitcherRightView)
     }
     
     private func setupSegementSlideScrollView() {
@@ -156,6 +155,9 @@ extension SegementSlideViewController {
         if segementSlideSwitcherView.leadingConstraint == nil {
             segementSlideSwitcherView.leadingConstraint = segementSlideSwitcherView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         }
+        if segementSlideSwitcherView.trailingConstraint == nil {
+            segementSlideSwitcherView.trailingConstraint = segementSlideSwitcherView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        }
         if segementSlideSwitcherView.heightConstraint == nil {
             segementSlideSwitcherView.heightConstraint = segementSlideSwitcherView.heightAnchor.constraint(equalToConstant: switcherHeight)
         } else {
@@ -164,19 +166,6 @@ extension SegementSlideViewController {
             }
         }
 
-        segementSlideSwitcherRightView.translatesAutoresizingMaskIntoConstraints = false
-        if segementSlideSwitcherRightView.topConstraint == nil {
-            segementSlideSwitcherRightView.topConstraint = segementSlideSwitcherRightView.topAnchor.constraint(equalTo: segementSlideSwitcherView.topAnchor)
-        }
-        if segementSlideSwitcherRightView.leadingConstraint == nil {
-            segementSlideSwitcherRightView.leadingConstraint = segementSlideSwitcherRightView.leadingAnchor.constraint(equalTo: segementSlideSwitcherView.trailingAnchor)
-        }
-        if segementSlideSwitcherRightView.trailingConstraint == nil {
-            segementSlideSwitcherRightView.trailingConstraint = segementSlideSwitcherRightView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        }
-        if segementSlideSwitcherRightView.bottomConstraint == nil {
-            segementSlideSwitcherRightView.bottomConstraint = segementSlideSwitcherRightView.bottomAnchor.constraint(equalTo: segementSlideSwitcherView.bottomAnchor)
-        }
 
         segementSlideContentView.translatesAutoresizingMaskIntoConstraints = false
         if segementSlideContentView.topConstraint == nil {
@@ -196,10 +185,9 @@ extension SegementSlideViewController {
             }
         }
         
-        segementSlideHeaderView.layer.zPosition = -4
-        segementSlideContentView.layer.zPosition = -3
-        segementSlideSwitcherView.layer.zPosition = -2
-        segementSlideSwitcherRightView.layer.zPosition = -1
+        segementSlideHeaderView.layer.zPosition = -3
+        segementSlideContentView.layer.zPosition = -2
+        segementSlideSwitcherView.layer.zPosition = -1
         
         let contentSize = CGSize(width: view.bounds.width, height: topLayoutLength+innerHeaderHeight+switcherHeight+contentViewHeight+1)
         if segementSlideScrollView.contentSize != contentSize {
