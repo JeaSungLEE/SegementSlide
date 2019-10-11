@@ -29,7 +29,11 @@ public class SegementSlideContentView: UIView {
     private var initSelectedIndex: Int?
     
     public private(set) var selectedIndex: Int?
-    public var isVerticalScrollable: Bool = true
+    public var isVerticalScrollable: Bool = true {
+        willSet {
+            scrollView.isPagingEnabled = newValue
+        }
+    }
     public weak var delegate: SegementSlideContentDelegate?
     public weak var viewController: UIViewController?
     
