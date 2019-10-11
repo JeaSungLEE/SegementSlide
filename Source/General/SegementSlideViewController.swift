@@ -90,7 +90,11 @@ open class SegementSlideViewController: UIViewController {
     open var switcherHeight: CGFloat {
         return 44
     }
-    
+
+    open var switcherTrailingMargin: CGFloat {
+        return 0
+    }
+
     open var switcherConfig: SegementSlideSwitcherConfig {
         return SegementSlideSwitcherConfig.shared
     }

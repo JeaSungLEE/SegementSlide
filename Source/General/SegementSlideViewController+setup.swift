@@ -156,7 +156,11 @@ extension SegementSlideViewController {
             segementSlideSwitcherView.leadingConstraint = segementSlideSwitcherView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         }
         if segementSlideSwitcherView.trailingConstraint == nil {
-            segementSlideSwitcherView.trailingConstraint = segementSlideSwitcherView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            segementSlideSwitcherView.trailingConstraint = segementSlideSwitcherView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: switcherTrailingMargin)
+        } else {
+            if segementSlideSwitcherView.trailingConstraint?.constant != switcherTrailingMargin {
+                segementSlideSwitcherView.trailingConstraint?.constant = switcherTrailingMargin
+            }
         }
         if segementSlideSwitcherView.heightConstraint == nil {
             segementSlideSwitcherView.heightConstraint = segementSlideSwitcherView.heightAnchor.constraint(equalToConstant: switcherHeight)
