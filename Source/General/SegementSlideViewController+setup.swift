@@ -97,6 +97,7 @@ extension SegementSlideViewController {
     
     internal func setupSwitcher() {
         segementSlideContentView.isVerticalScrollable = switcherConfig.isVerticalScrollable
+        segementSlideContentView.isScrollEnabled = switcherConfig.isScrollEnabled
         segementSlideSwitcherView.config = switcherConfig
     }
     
