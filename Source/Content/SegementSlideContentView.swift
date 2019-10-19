@@ -34,6 +34,14 @@ public class SegementSlideContentView: UIView {
             scrollView.isPagingEnabled = newValue
         }
     }
+    public var isScrollEnabled: Bool {
+         get {
+             return scrollView.isScrollEnabled
+         }
+         set {
+             scrollView.isScrollEnabled = newValue
+         }
+     }
     public weak var delegate: SegementSlideContentDelegate?
     public weak var viewController: UIViewController?
     
