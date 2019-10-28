@@ -30,7 +30,7 @@ public protocol SegementSlideSwitcherViewDelegate: class {
     func segementSwitcherView(_ segementSlideSwitcherView: SegementSlideSwitcherView, showBadgeAtIndex index: Int) -> BadgeType
 }
 
-public class SegementSlideSwitcherView: UIView {
+open class SegementSlideSwitcherView: UIView {
 
     private let scrollView = UIScrollView()
     private let indicatorView = UIView()
