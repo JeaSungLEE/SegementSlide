@@ -97,6 +97,7 @@ extension SegementSlideViewController {
     
     internal func setupSwitcher() {
         segementSlideContentView.isVerticalScrollable = switcherConfig.isVerticalScrollable
+        segementSlideContentView.isScrollEnabled = switcherConfig.isScrollEnabled
         segementSlideSwitcherView.config = switcherConfig
     }
     
@@ -200,7 +201,7 @@ extension SegementSlideViewController {
     }
     
     internal func resetChildViewControllerContentOffsetY() {
-        guard segementSlideScrollView.contentOffset.y < headerStickyHeight else {
+        guard segementSlideScrollView.contentOffset.y <= headerStickyHeight else {
             return
         }
         let collection = waitTobeResetContentOffsetY
