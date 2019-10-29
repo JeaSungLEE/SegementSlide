@@ -30,7 +30,7 @@ public protocol SegementSlideSwitcherViewDelegate: class {
     func segementSwitcherView(_ segementSlideSwitcherView: SegementSlideSwitcherView, showBadgeAtIndex index: Int) -> BadgeType
 }
 
-public class SegementSlideSwitcherView: UIView {
+open class SegementSlideSwitcherView: UIView {
 
     private let scrollView = UIScrollView()
     private let indicatorView = UIView()
@@ -205,7 +205,7 @@ extension SegementSlideSwitcherView {
                 let title = titleButton.title(for: .normal) ?? ""
                 let normalButtonWidth = title.boundingWidth(with: innerConfig.normalTitleFont)
                 let selectedButtonWidth = title.boundingWidth(with: innerConfig.selectedTitleFont)
-                buttonWidth = selectedButtonWidth > normalButtonWidth ? selectedButtonWidth : normalButtonWidth
+                buttonWidth = selectedButtonWidth > normalButtonWidth ? min(innerConfig.buttonMaxSize, selectedButtonWidth) : min(innerConfig.buttonMaxSize, normalButtonWidth)
             }
             titleButton.frame = CGRect(x: offsetX, y: 0, width: buttonWidth, height: scrollView.bounds.height)
             switch innerConfig.type {
