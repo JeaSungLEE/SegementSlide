@@ -108,6 +108,7 @@ open class SegementSlideSwitcherView: UIView {
             button.setTitle(title, for: .normal)
             button.tag = index
             button.setTitleColor(innerConfig.normalTitleColor, for: .normal)
+            button.titleLabel?.lineBreakMode = .byTruncatingTail
             button.addTarget(self, action: #selector(didClickTitleButton), for: .touchUpInside)
             scrollView.addSubview(button)
             titleButtons.append(button)
