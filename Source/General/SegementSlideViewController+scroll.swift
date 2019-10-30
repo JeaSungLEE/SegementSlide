@@ -65,6 +65,11 @@ extension SegementSlideViewController {
         let childContentOffsetY = childScrollView.contentOffset.y
         switch innerBouncesType {
         case .parent:
+            if #available(iOS 10, *) {
+                if let refreshControl = childScrollView.refreshControl, refreshControl.isRefreshing {
+                    return
+                }
+            }
             if !canChildViewScroll {
                 childScrollView.contentOffset.y = 0
             } else if childContentOffsetY <= 0 {
