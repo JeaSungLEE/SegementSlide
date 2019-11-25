@@ -235,7 +235,7 @@ extension SegementSlideSwitcherView {
         seperatelineView.frame = CGRect(x: 0, y: bounds.height, width: bounds.width, height: 1)
     }
 
-    private func updateSelectedButton(at index: Int, animated: Bool) {
+    open func updateSelectedButton(at index: Int, animated: Bool) {
         guard scrollView.frame != .zero else {
             initSelectedIndex = index
             return
@@ -277,7 +277,7 @@ extension SegementSlideSwitcherView {
         delegate?.segementSwitcherView(self, didSelectAtIndex: index, animated: animated)
     }
 
-    @objc private func didClickTitleButton(_ button: UIButton) {
+    @objc public func didClickTitleButton(_ button: UIButton) {
         selectSwitcher(at: button.tag, animated: true)
     }
 
