@@ -42,7 +42,7 @@ open class SegementSlideSwitcherView: UIView {
         return scrollView.gestureRecognizers
     }
 
-    public private(set) var selectedIndex: Int?
+    public var selectedIndex: Int?
     public weak var delegate: SegementSlideSwitcherViewDelegate?
 
     /// you must call `reloadData()` to make it work, after the assignment.
