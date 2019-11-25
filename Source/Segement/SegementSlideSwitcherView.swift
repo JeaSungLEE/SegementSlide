@@ -62,19 +62,23 @@ open class SegementSlideSwitcherView: UIView {
         setup()
     }
 
-    private func setup() {
-        addSubview(scrollView)
+    open func setup() {
+        clipsToBounds = false
+        backgroundColor = .white
+        
         if #available(iOS 11.0, *) {
             scrollView.contentInsetAdjustmentBehavior = .never
         }
-        scrollView.constraintToSuperview()
+        scrollView.clipsToBounds = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.backgroundColor = .clear
-        backgroundColor = .white
+        addSubview(scrollView)
+        
+        scrollView.constraintToSuperview()
     }
 
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         layoutTitleButtons()
         reloadBadges()
@@ -87,7 +91,7 @@ open class SegementSlideSwitcherView: UIView {
     /// you should call `selectSwitcher(at index: Int, animated: Bool)` after call the method.
     /// otherwise, none of them will be selected.
     /// However, if an item was previously selected, it will be reSelected.
-    public func reloadData() {
+    open func reloadData() {
         for titleButton in titleButtons {
             titleButton.removeFromSuperview()
             titleButton.frame = .zero
@@ -117,8 +121,7 @@ open class SegementSlideSwitcherView: UIView {
 
         if innerConfig.seperatelineType == .full {
             scrollView.addSubview(seperateLineView)
-            seperateLineView.backgroundColor = .black
-            seperateLineView.alpha = 0.06
+            seperateLineView.backgroundColor = innerConfig.seperatelineColor
         }
 
         scrollView.addSubview(indicatorView)
@@ -135,7 +138,7 @@ open class SegementSlideSwitcherView: UIView {
     }
 
     /// reload all badges in `SegementSlideSwitcherView`
-    public func reloadBadges() {
+    open func reloadBadges() {
         for (index, titleButton) in titleButtons.enumerated() {
             guard let type = delegate?.segementSwitcherView(self, showBadgeAtIndex: index) else {
                 titleButton.insideBadge.type = .none
@@ -219,9 +222,10 @@ extension SegementSlideSwitcherView {
         switch innerConfig.type {
         case .tab:
             scrollView.contentSize = CGSize(width: bounds.width, height: bounds.height)
-            seperateLineView.frame = CGRect(x: 0, y: bounds.height - 1, width: bounds.width, height: 1)
+            seperateLineView.frame = CGRect(x: 0, y: bounds.height, width: bounds.width, height: 1)
         case .segement:
             scrollView.contentSize = CGSize(width: offsetX-innerConfig.horizontalSpace+innerConfig.horizontalMargin, height: bounds.height)
+            seperateLineView.frame = CGRect(x: 0, y: bounds.height, width: bounds.width, height: 1)
         }
     }
 
@@ -243,13 +247,13 @@ extension SegementSlideSwitcherView {
         if let indicatorWidth = innerConfig.indicatorWidth {
             if animated, indicatorView.frame != .zero {
                 UIView.animate(withDuration: 0.1) {
-                    self.indicatorView.frame = CGRect(x: titleButton.frame.origin.x+(titleButton.bounds.width-indicatorWidth)/2, y: self.frame.height-self.innerConfig.indicatorHeight, width: indicatorWidth, height: self.innerConfig.indicatorHeight)
+                    self.indicatorView.frame = CGRect(x: titleButton.frame.origin.x+(titleButton.bounds.width-indicatorWidth)/2, y: self.frame.height-self.innerConfig.indicatorHeight + 1, width: indicatorWidth, height: self.innerConfig.indicatorHeight)
                 }
             } else {
-                indicatorView.frame = CGRect(x: titleButton.frame.origin.x+(titleButton.bounds.width-indicatorWidth)/2, y: frame.height-innerConfig.indicatorHeight, width: indicatorWidth, height: innerConfig.indicatorHeight)
+                indicatorView.frame = CGRect(x: titleButton.frame.origin.x+(titleButton.bounds.width-indicatorWidth)/2, y: frame.height-innerConfig.indicatorHeight + 1, width: indicatorWidth, height: innerConfig.indicatorHeight)
             }
         } else {
-            indicatorView.frame = CGRect(x: titleButton.frame.origin.x, y: frame.height-innerConfig.indicatorHeight, width: titleButton.frame.size.width, height: innerConfig.indicatorHeight)
+            indicatorView.frame = CGRect(x: titleButton.frame.origin.x, y: frame.height-innerConfig.indicatorHeight + 1, width: titleButton.frame.size.width, height: innerConfig.indicatorHeight)
         }
         if case .segement = innerConfig.type {
             var offsetX = titleButton.frame.origin.x-(scrollView.bounds.width-titleButton.bounds.width)/2
@@ -262,7 +266,7 @@ extension SegementSlideSwitcherView {
                 scrollView.setContentOffset(CGPoint(x: offsetX, y: scrollView.contentOffset.y), animated: animated)
             }
         }
-        guard index != selectedIndex else { return }
+        
         selectedIndex = index
         delegate?.segementSwitcherView(self, didSelectAtIndex: index, animated: animated)
     }
