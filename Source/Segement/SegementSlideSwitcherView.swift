@@ -174,31 +174,7 @@ open class SegementSlideSwitcherView: UIView {
             }
         }
     }
-
-    /// select one item by index
-    public func selectSwitcher(at index: Int, animated: Bool) {
-        updateSelectedButton(at: index, animated: animated)
-    }
     
-    public func setSeperatelineView(alpha: CGFloat) {
-        seperatelineView.alpha = alpha
-    }
-
-}
-
-extension SegementSlideSwitcherView {
-
-    private func recoverInitSelectedIndex() {
-        guard let initSelectedIndex = initSelectedIndex else { return }
-        self.initSelectedIndex = nil
-        updateSelectedButton(at: initSelectedIndex, animated: false)
-    }
-    
-    public func updateSelectedIndex() {
-        guard let selectedIndex = selectedIndex else { return }
-        updateSelectedButton(at: selectedIndex, animated: false)
-    }
-
     open func layoutTitleButtons() {
         guard scrollView.frame != .zero else { return }
         guard !titleButtons.isEmpty else {
@@ -235,7 +211,31 @@ extension SegementSlideSwitcherView {
         seperatelineView.frame = CGRect(x: 0, y: bounds.height, width: bounds.width, height: 1)
     }
 
-    open func updateSelectedButton(at index: Int, animated: Bool) {
+    /// select one item by index
+    public func selectSwitcher(at index: Int, animated: Bool) {
+        updateSelectedButton(at: index, animated: animated)
+    }
+    
+    public func setSeperatelineView(alpha: CGFloat) {
+        seperatelineView.alpha = alpha
+    }
+
+}
+
+extension SegementSlideSwitcherView {
+
+    private func recoverInitSelectedIndex() {
+        guard let initSelectedIndex = initSelectedIndex else { return }
+        self.initSelectedIndex = nil
+        updateSelectedButton(at: initSelectedIndex, animated: false)
+    }
+    
+    public func updateSelectedIndex() {
+        guard let selectedIndex = selectedIndex else { return }
+        updateSelectedButton(at: selectedIndex, animated: false)
+    }
+
+    public func updateSelectedButton(at index: Int, animated: Bool) {
         guard scrollView.frame != .zero else {
             initSelectedIndex = index
             return
