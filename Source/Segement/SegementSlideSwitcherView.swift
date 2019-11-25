@@ -31,13 +31,12 @@ public protocol SegementSlideSwitcherViewDelegate: class {
 }
 
 open class SegementSlideSwitcherView: UIView {
-    private var initSelectedIndex: Int?
-    
-    public var innerConfig: SegementSlideSwitcherConfig = SegementSlideSwitcherConfig.shared
     public let scrollView = UIScrollView()
     public let indicatorView = UIView()
     public let seperatelineView = UIView()
     public var titleButtons: [UIButton] = []
+    public var initSelectedIndex: Int?
+    public var innerConfig: SegementSlideSwitcherConfig = SegementSlideSwitcherConfig.shared
     
     internal var gestureRecognizersInScrollView: [UIGestureRecognizer]? {
         return scrollView.gestureRecognizers
@@ -210,32 +209,8 @@ open class SegementSlideSwitcherView: UIView {
         
         seperatelineView.frame = CGRect(x: 0, y: bounds.height, width: bounds.width, height: 1)
     }
-
-    /// select one item by index
-    public func selectSwitcher(at index: Int, animated: Bool) {
-        updateSelectedButton(at: index, animated: animated)
-    }
     
-    public func setSeperatelineView(alpha: CGFloat) {
-        seperatelineView.alpha = alpha
-    }
-
-}
-
-extension SegementSlideSwitcherView {
-
-    private func recoverInitSelectedIndex() {
-        guard let initSelectedIndex = initSelectedIndex else { return }
-        self.initSelectedIndex = nil
-        updateSelectedButton(at: initSelectedIndex, animated: false)
-    }
-    
-    public func updateSelectedIndex() {
-        guard let selectedIndex = selectedIndex else { return }
-        updateSelectedButton(at: selectedIndex, animated: false)
-    }
-
-    public func updateSelectedButton(at index: Int, animated: Bool) {
+    open func updateSelectedButton(at index: Int, animated: Bool) {
         guard scrollView.frame != .zero else {
             initSelectedIndex = index
             return
@@ -275,6 +250,30 @@ extension SegementSlideSwitcherView {
         
         selectedIndex = index
         delegate?.segementSwitcherView(self, didSelectAtIndex: index, animated: animated)
+    }
+
+    /// select one item by index
+    public func selectSwitcher(at index: Int, animated: Bool) {
+        updateSelectedButton(at: index, animated: animated)
+    }
+    
+    public func setSeperatelineView(alpha: CGFloat) {
+        seperatelineView.alpha = alpha
+    }
+
+}
+
+extension SegementSlideSwitcherView {
+
+    private func recoverInitSelectedIndex() {
+        guard let initSelectedIndex = initSelectedIndex else { return }
+        self.initSelectedIndex = nil
+        updateSelectedButton(at: initSelectedIndex, animated: false)
+    }
+    
+    public func updateSelectedIndex() {
+        guard let selectedIndex = selectedIndex else { return }
+        updateSelectedButton(at: selectedIndex, animated: false)
     }
 
     @objc public func didClickTitleButton(_ button: UIButton) {
