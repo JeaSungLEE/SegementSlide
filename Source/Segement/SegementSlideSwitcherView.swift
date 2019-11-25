@@ -199,7 +199,7 @@ extension SegementSlideSwitcherView {
         updateSelectedButton(at: selectedIndex, animated: false)
     }
 
-    public func layoutTitleButtons() {
+    open func layoutTitleButtons() {
         guard scrollView.frame != .zero else { return }
         guard !titleButtons.isEmpty else {
             scrollView.contentSize = CGSize(width: bounds.width, height: bounds.height)
