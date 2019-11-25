@@ -230,6 +230,7 @@ extension SegementSlideSwitcherView {
             scrollView.contentSize = CGSize(width: bounds.width, height: bounds.height)
         case .segement:
             scrollView.contentSize = CGSize(width: offsetX-innerConfig.horizontalSpace+innerConfig.horizontalMargin, height: bounds.height)
+            seperateLineView.frame = CGRect(x: 0, y: bounds.height, width: bounds.width, height: 1)
         }
         
         seperatelineView.frame = CGRect(x: 0, y: bounds.height, width: bounds.width, height: 1)
