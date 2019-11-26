@@ -89,6 +89,12 @@ public class SegementSlideContentView: UIView {
         updateSelectedIndex()
     }
     
+    public func scrollToTop(animated: Bool) {
+        let contentInset = scrollView.contentInset
+        let offset = CGPoint(x: 0, y: -contentInset.top)
+        scrollView.setContentOffset(offset, animated: animated)
+    }
+    
     /// select one item by index
     public func scrollToSlide(at index: Int, animated: Bool) {
         updateSelectedViewController(at: index, animated: animated)
