@@ -34,13 +34,21 @@ public protocol SegementSlideSwitcherViewSelectDelegate: class {
     func segementSwitcherView(_ segementSlideSwitcherView: SegementSlideSwitcherView, didSelectAtIndex index: Int)
 }
 
+private class SegementSlideIndicatorView: UIView {
+    
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        return false
+    }
+    
+}
+
 open class SegementSlideSwitcherView: UIView {
     public let scrollView = UIScrollView()
-    public let indicatorView = UIView()
     public let seperatelineView = UIView()
     public var titleButtons: [UIButton] = []
     public var initSelectedIndex: Int?
     public var innerConfig: SegementSlideSwitcherConfig = SegementSlideSwitcherConfig.shared
+    public var indicatorView: UIView = SegementSlideIndicatorView()
     
     internal var gestureRecognizersInScrollView: [UIGestureRecognizer]? {
         return scrollView.gestureRecognizers
