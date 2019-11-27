@@ -30,6 +30,10 @@ public protocol SegementSlideSwitcherViewDelegate: class {
     func segementSwitcherView(_ segementSlideSwitcherView: SegementSlideSwitcherView, showBadgeAtIndex index: Int) -> BadgeType
 }
 
+public protocol SegementSlideSwitcherViewSelectDelegate: class {
+    func segementSwitcherView(_ segementSlideSwitcherView: SegementSlideSwitcherView, didSelectAtIndex index: Int)
+}
+
 open class SegementSlideSwitcherView: UIView {
     public let scrollView = UIScrollView()
     public let indicatorView = UIView()
@@ -44,6 +48,7 @@ open class SegementSlideSwitcherView: UIView {
 
     public var selectedIndex: Int?
     public weak var delegate: SegementSlideSwitcherViewDelegate?
+    public weak var selectDelegate: SegementSlideSwitcherViewSelectDelegate?
 
     /// you must call `reloadData()` to make it work, after the assignment.
     public var config: SegementSlideSwitcherConfig = SegementSlideSwitcherConfig.shared
@@ -248,6 +253,7 @@ open class SegementSlideSwitcherView: UIView {
             }
         }
         
+        guard index != selectedIndex else { return }
         selectedIndex = index
         delegate?.segementSwitcherView(self, didSelectAtIndex: index, animated: animated)
     }
@@ -277,7 +283,13 @@ extension SegementSlideSwitcherView {
     }
 
     @objc public func didClickTitleButton(_ button: UIButton) {
-        selectSwitcher(at: button.tag, animated: true)
+        
+        let index = button.tag
+        selectSwitcher(at: index, animated: true)
+        
+        if selectedIndex == index {
+            selectDelegate?.segementSwitcherView(self, didSelectAtIndex: index)
+        }
     }
 
 }
