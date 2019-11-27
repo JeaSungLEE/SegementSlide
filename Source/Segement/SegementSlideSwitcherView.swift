@@ -285,10 +285,10 @@ extension SegementSlideSwitcherView {
     @objc public func didClickTitleButton(_ button: UIButton) {
         
         let index = button.tag
-        selectSwitcher(at: index, animated: true)
-        
         if selectedIndex == index {
             selectDelegate?.segementSwitcherView(self, didSelectAtIndex: index)
+        } else {
+            selectSwitcher(at: index, animated: true)
         }
     }
 
