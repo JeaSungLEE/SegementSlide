@@ -15,6 +15,7 @@ public struct SegementSlideSwitcherConfig {
     public var type: SwitcherType
     public var underlineType: UnderlineType
     public var seperatelineType: SeperatelineType
+    public var seperatelineColor: UIColor
     public var horizontalMargin: CGFloat
     public var horizontalSpace: CGFloat
     public var normalTitleFont: UIFont
@@ -35,6 +36,7 @@ public struct SegementSlideSwitcherConfig {
     public init(type: SwitcherType = .segement,
                 underlineType: UnderlineType = .corner,
                 seperatelineType: SeperatelineType = .none,
+                seperatelineColor: UIColor = UIColor.black.withAlphaComponent(0.06),
                 horizontalMargin: CGFloat = 16,
                 horizontalSpace: CGFloat = 32,
                 normalTitleFont: UIFont = UIFont.systemFont(ofSize: 15),
@@ -54,6 +56,7 @@ public struct SegementSlideSwitcherConfig {
         self.type = type
         self.underlineType = underlineType
         self.seperatelineType = seperatelineType
+        self.seperatelineColor = seperatelineColor
         self.horizontalMargin = horizontalMargin
         self.horizontalSpace = horizontalSpace
         self.normalTitleFont = normalTitleFont
