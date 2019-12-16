@@ -73,6 +73,18 @@ extension SegementSlideViewController: SegementSlideContentDelegate {
 }
 
 extension SegementSlideViewController {
+    public func resetScrollViewObservation(scrollView: UIScrollView) {
+        childKeyValueObservation?.invalidate()
+
+        let keyValueObservation = scrollView.observe(\.contentOffset, options: [.new, .old], changeHandler: { [weak self] (scrollView, change) in
+            guard let self = self else { return }
+            guard change.newValue != change.oldValue else { return }
+            self.childScrollViewDidScroll(scrollView)
+        })
+
+        childKeyValueObservation = keyValueObservation
+    }
+
     public func resetScrollViewObservation() {
         childKeyValueObservation?.invalidate()
         
