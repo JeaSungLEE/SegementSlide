@@ -126,6 +126,8 @@ open class TransparentSlideViewController: SegementSlideViewController {
     }
     
     open override func scrollViewDidScroll(_ scrollView: UIScrollView, isParent: Bool) {
+        super.scrollViewDidScroll(scrollView, isParent: isParent)
+        
         guard isParent else { return }
         guard parentScrollView != nil else {
             parentScrollView = scrollView
